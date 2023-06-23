@@ -23,11 +23,8 @@ export default function Post(props) {
 
     function handleLike() {
         if(user) {
-            fetch(`http://localhost:4000/action/like/${postId}`, {
+            fetch(`https://vccp-be.vercel.app/action/like/${postId}`, {
                 method: "POST",
-                headers: {
-                    'Content-type': 'application/json'
-                },
                 body: JSON.stringify({ Uid: Uid})
             })
     
@@ -42,11 +39,8 @@ export default function Post(props) {
     function handleDisLike() {
         if(!Uid) return
 
-        fetch(`http://localhost:4000/action/dislike/${postId}`, {
+        fetch(`https://vccp-be.vercel.app/action/dislike/${postId}`, {
             method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
             body: JSON.stringify({ Uid: Uid})
         })  
             .then(res => res.json())
@@ -60,21 +54,15 @@ export default function Post(props) {
 
     function handleFollow() {
         if(user) {
-            fetch(`http://localhost:4000/action/follow/${Cid}`, {
+            fetch(`https://vccp-be.vercel.app/action/follow/${Cid}`, {
                 method: "POST",
-                headers: {
-                  'Content-type': 'application/json'
-                },
                 body: JSON.stringify({ Uid: Uid})
             })
                 .then(res => res.json())
                 .then(data => console.log(data))
 
-            fetch(`http://localhost:4000/action/followed/${Cid}`, {
+            fetch(`https://vccp-be.vercel.app/action/followed/${Cid}`, {
                 method: "POST",
-                headers: {
-                    'Content-type': 'application/json'
-                },
                 body: JSON.stringify({ Uid: Uid})
             })
                 .then(res => res.json())
@@ -90,21 +78,15 @@ export default function Post(props) {
     function handleUnFollow() {
         if(!Uid) return
 
-        fetch(`http://localhost:4000/action/unfollow/${Cid}`, {
+        fetch(`https://vccp-be.vercel.app/action/unfollow/${Cid}`, {
             method: "POST",
-            headers: {
-              'Content-type': 'application/json'
-            },
             body: JSON.stringify({ Uid: Uid})
         })
             .then(res => res.json())
             .then(data => console.log(data))
         
-        fetch(`http://localhost:4000/action/unfollowed/${Cid}`, {
+        fetch(`https://vccp-be.vercel.app/action/unfollowed/${Cid}`, {
             method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
             body: JSON.stringify({ Uid: Uid})
         })
             .then(res => res.json())
@@ -122,11 +104,8 @@ export default function Post(props) {
             setIslike(Boolean(wasLike))
         }
 
-        fetch(`http://localhost:4000/creator/isFollow/${Cid}`,{            
+        fetch(`https://vccp-be.vercel.app/creator/isFollow/${Cid}`,{            
             method: "POST",
-            headers: {
-            'Content-type': 'application/json'
-            },
             body: JSON.stringify({ Uid: Uid})
         })
             .then(res => res.json())
@@ -142,8 +121,6 @@ export default function Post(props) {
             setIsOpenComment(false)
         }
     }, [isOpenComment])
-
-    // console.log(Uid)
 
   return (
     <li ref={postRef} className=" relative flex">
@@ -165,22 +142,24 @@ export default function Post(props) {
                         <div className="cursor-pointer w-10 h-10 bg-center bg-cover" style={{backgroundImage: `url(${creatorAvata})`}}/>
                     }
                     {/* <div className="w-12 h-12 mr-2 bg-center bg-cover rounded-full" style={{backgroundImage: 'url(https://cdn.tgdd.vn/Files/2020/06/08/1261696/moi-tai-bo-hinh-nen-asus-rog-2020-moi-nhat_800x450.jpg)'}}/> */}
-                    <div>
+                    <div className="dark:text-white">
                         <p className=" text-lg leading-none font-medium">{creatorName}</p>
                         <p className="text-gray-400">{rank}</p>
                     </div>
                 </div>
-                {isFollow ? 
-                    <div onClick={handleUnFollow} className="px-5 py-1 border rounded-md font-medium transition-all duration-75 bg-[#8950FA] text-white cursor-pointer">
-                        follow
-                    </div>
-                :
-                    <div onClick={handleFollow} className="px-5 py-1 border border-[#8950FA] rounded-md font-medium transition-all duration-75 hover:bg-[#8950FA] hover:text-white cursor-pointer">
-                        follow
-                    </div>
-                }
+                <div className="dark:text-white">
+                    {isFollow ? 
+                        <div onClick={handleUnFollow} className="px-5 py-1 border rounded-md font-medium transition-all duration-75 bg-[#8950FA] text-white cursor-pointer">
+                            follow
+                        </div>
+                    :
+                        <div onClick={handleFollow} className="px-5 py-1 border border-[#8950FA] rounded-md font-medium transition-all duration-75 hover:bg-[#8950FA] hover:text-white cursor-pointer">
+                            follow
+                        </div>
+                    }
+                </div>
             </div>
-            <div  className={` px-2 pb-2 `}>
+            <div  className={` px-2 pb-2 dark:text-white `}>
                 
                 <td className=" w-full break-all" dangerouslySetInnerHTML={{__html: caption}} />
 
@@ -191,19 +170,17 @@ export default function Post(props) {
                     <VideoControl {...props} caption={caption} postId={postId} videoUrl={videoUrl}/>
                 </div>
 
-                <div className=" absolute -right-12 h-full flex flex-col justify-around w-12 bg-slate-100">
-                    <div className=" absolute top-0 border-t-[50px] border-t-white border-l-[50px] border-l-transparent"></div>
-                    <div className=" absolute bottom-0 border-t-[50px] border-t-white border-l-[50px] border-l-transparent rotate-90"></div>
+                <div className=" absolute -right-12 h-full flex flex-col justify-around w-12 dark:text-white">
                     <div className="z-10">
                         {isLike ? 
-                            <i onClick={handleDisLike} class="fa-regular fa-thumbs-up text-3xl text-[#8C52FF] cursor-pointer ml-2"></i>
+                            <i onClick={handleDisLike} class="fa-regular fa-thumbs-up text-3xl text-[#8C52FF] cursor-pointer ml-2 dark:text-white"></i>
                         : 
-                            <i onClick={handleLike} class="fa-regular fa-thumbs-up text-3xl text-black hover:text-[#8C52FF] cursor-pointer ml-2"></i>
+                            <i onClick={handleLike} class="fa-regular fa-thumbs-up text-3xl text-black hover:text-[#8C52FF] cursor-pointer ml-2 dark:text-white"></i>
                         }
                         <p className="text-center mr-2">{newLike}</p>
                     </div>
                     <div className="z-10">
-                        <i onClick={() => setIsOpenComment(!isOpenComment)} class={`fa-solid fa-comment-dots text-3xl text-black hover:text-[#8C52FF] ${isOpenComment && 'text-[#8C52FF]'} cursor-pointer ml-2`}></i>
+                        <i onClick={() => setIsOpenComment(!isOpenComment)} class={`fa-solid fa-comment-dots text-3xl text-black hover:text-[#8C52FF] dark:text-white hover:dark:text-[#8C52FF] ${isOpenComment && 'text-[#8C52FF] dark:text-[#8C52FF]'} cursor-pointer ml-2`}></i>
                         {/* <p className="text-center mr-2">{}</p> */}
                     </div>
                 </div>

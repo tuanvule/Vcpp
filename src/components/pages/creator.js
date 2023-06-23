@@ -16,15 +16,10 @@ export default function Creator() {
     const [isRequestLogin, setIsRequestLogin] = useState(false)
     const [openVideoList, setOpenVideoList] = useState({})
 
-    console.log(openVideoList)
-
     function handleFollow() {
         if(user) {
-            fetch(`http://localhost:4000/creator/action/follow/${profile[0]._id}`, {
+            fetch(`https://vccp-be.vercel.app/creator/action/follow/${profile[0]._id}`, {
                 method: "POST",
-                headers: {
-                  'Content-type': 'application/json'
-                },
                 body: JSON.stringify({ Uid: user._id})
             })
                 .then(() => setIsFollow(true))
@@ -35,11 +30,8 @@ export default function Creator() {
 
     function handleUnFollow() {
         if(user) {
-            fetch(`http://localhost:4000/creator/action/unfollow/${profile[0]._id}`, {
+            fetch(`https://vccp-be.vercel.app/creator/action/unfollow/${profile[0]._id}`, {
                 method: "POST",
-                headers: {
-                  'Content-type': 'application/json'
-                },
                 body: JSON.stringify({ Uid: user._id})
             })
                 .then(res => setIsFollow(false))
@@ -50,11 +42,8 @@ export default function Creator() {
 
     useEffect(() => {
         if(profile) {
-            fetch(`http://localhost:4000/getVDByCreator/${profile[0]._id}`, {
+            fetch(`https://vccp-be.vercel.app/getVDByCreator/${profile[0]._id}`, {
                 method: "GET",
-                headers: {
-                'Content-type': 'application/json'
-                },
             })
             .then(res => res.json())
             .then(data => setVideos(data))
@@ -64,11 +53,8 @@ export default function Creator() {
 
     useEffect(() => {
         if(profile) {
-            fetch(`http://localhost:4000/creator/isFollow/${profile[0]._id}`, {
+            fetch(`https://vccp-be.vercel.app/creator/isFollow/${profile[0]._id}`, {
                 method: "POST",
-                headers: {
-                'Content-type': 'application/json'
-                },
                 body: JSON.stringify({ Uid: user._id})
             })
             .then(res => res.json())
@@ -77,10 +63,8 @@ export default function Creator() {
         }
     }, [])
 
-    // if(videos) console.log(videos[0].videoUrl)
-
   return (
-    <div className="">
+    <div className="dark:text-white">
         {profile ? <div className="flex-1 lg:pr-[8rem] pr-11 lg:pl-4">
             <div className="flex items-center">
                 {profile[0].avata.length <= 1 ? 
@@ -106,7 +90,7 @@ export default function Creator() {
                     }
                     
                     { user._id === profile[0]._id &&
-                        <div onClick={() => setIsEditProfile(true)} className="text-center px-4 py-1 rounded-md border text-lg font-medium hover:brightness-95 cursor-pointer my-5 bg-white"><i class="fa-solid fa-book mr-3"></i>Edit profile</div>
+                        <div onClick={() => setIsEditProfile(true)} className="text-center px-4 py-1 rounded-md border text-lg font-medium hover:brightness-95 cursor-pointer my-5 bg-white dark:bg-[#1e1926] dark:border-[#8C52FF] dark:hover:bg-[#8C52FF] transition"><i class="fa-solid fa-book mr-3"></i>Edit profile</div>
                         // isFollow ? 
                         //     <div onClick={handleUnFollow} className="text-center px-8 py-1 rounded-md border bg-[#8C52FF] text-white text-lg font-medium hover:brightness-95 cursor-pointer mt-3 transition-all duration-75">
                         //         follow
@@ -142,7 +126,7 @@ export default function Creator() {
                                 Follower 
                             </h3>
                             <h3 className="text-[#8C52FF]">{profile[0].follower.length}</h3>
-                            {user._id !== profile[0]._id &&                         
+                            {user && user._id !== profile[0]._id &&                         
                                 <div className="follow-hover absolute top-0 rounded-md flex opacity-0 w-full h-full bg-[#8C52FF] transition">
                                     <h3 className="m-auto text-white font-medium ">click to follow</h3>
                                 </div>

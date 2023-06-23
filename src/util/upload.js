@@ -42,11 +42,8 @@ function uploadVideo(file, setProgress, setVideoUrl) {
           // Upload completed successfully, now we can get the download URL
           getDownloadURL(uploadTask.snapshot.ref).then((URL) => {
             if(URL) {
-                // console.log(URL)
                 setVideoUrl(URL)
-                // inputAvataRef.current.value = URL
             }
-            // setIsLoading(false)
           });
         }
       );

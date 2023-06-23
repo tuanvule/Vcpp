@@ -12,16 +12,12 @@ export default function VideoList(props) {
     
     const {Cid, avata, caption, creatorName,_id} = videos[currentVideo]
 
-    console.log(videos[currentVideo])
-
     function nextVideo() {
         if(videos && currentVideo + 1 < videos.length) setCurrentVideo(currentVideo + 1)
-        console.log(currentVideo)
     }
 
     function prevVideo() {
         if(videos && currentVideo - 1 >= 0) setCurrentVideo(currentVideo - 1)
-        console.log(currentVideo)
 
     }
 
@@ -30,12 +26,10 @@ export default function VideoList(props) {
         if(e.target.className.includes('father')) {
             e.target.style.color = e.target.style.color = '#8C52FF' ? '#fff' : '#8C52FF'
             e.target.style.background = '#fdfdfda3'
-            console.log(e.target.style.color == '#8C52FF' ? '#fff' : '#8C52FF')
         } else {
             e.target.parentElement.style.color = '#8C52FF'
             e.target.parentElement.style.background = '#fdfdfda3'
         }
-        console.log(e.target.style)
     }
 
   return (

@@ -18,6 +18,25 @@
     background: #7c49e3;
 }
 
+.scrollbar_dark::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollbar_dark::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #8c52ff;
+}
+
+.scrollbar_dark::-webkit-scrollbar-thumb {
+    background: #332e3a;
+    border-radius: 100vh;
+    border: 2px solid #8950FA;
+}
+
+.scrollbar_dark::-webkit-scrollbar-thumb:hover {
+    background: #615c67;
+}
+
 blockquote {
     border-left: 5px solid #eee;
     color: #666;
@@ -114,6 +133,14 @@ ol {
     background-color: rgba(255, 255, 255, 0.68);
     border-radius: 12px;
     border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.dark_card {
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(17, 25, 40, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
 }
 
 .follow-btn:hover .follow-hover {

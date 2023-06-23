@@ -3,35 +3,31 @@ import { AppContext } from '../../context/appContext'
 import Post from '../side_page/post'
 
 export default function PostsModal(props) {
-    const { user } = useContext(AppContext)
+    const { user, theme } = useContext(AppContext)
 
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
       if(props.isGetHotVD) {
-        fetch(`http://localhost:4000?isGetHotVD=true`, {
+        fetch(`vccp-be.vercel.app?isGetHotVD=true`, {
             method: "GET",
-            headers: {
-              'Content-type': 'application/json'
-            },
           })
             .then(res => res.json())
             .then(data => setPosts(data))
             .catch(err => console.log(err))
       } else {
-          fetch(`http://localhost:4000/`, {
+          fetch(`https://vccp-be.vercel.app/`, {
             method: "GET",
-            headers: {
-              'Content-type': 'application/json'
-            },
           })
             .then(res => res.json())
             .then(data => setPosts(data))
-            .catch(err => console.log(err))
+            .catch(err => {
+              console.log(err)
+              console.log('err')})
         }
     }, [props])
   return (
-        <ul className="post-list flex-1 scrollbar h-full overflow-y-auto overflow-x-hidden pl-10 pr-[7.5rem]">
+        <ul className={`post-list flex-1 ${theme === 'dark' ? 'scrollbar_dark' : 'scrollbar'} scrollbar h-full overflow-y-auto overflow-x-hidden pl-10 pr-[7.5rem] `}>
           {posts && posts.map((post, index) => 
             <Post creatorName={post.creatorName} rank="gold" creatorAvata={post.avata} caption={post.caption} videoUrl={post.videoUrl} like={post.like} postId={post._id} Cid={post.Cid} Uid={user && user._id}/>
           )}

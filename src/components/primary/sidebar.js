@@ -7,11 +7,8 @@ function SideBar(props) {
   const [creators, setCreators] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:4000/creator/getCreator?type=SC', {
+    fetch('https://vccp-be.vercel.app/creator/getCreator?type=SC', {
       method: "GET",
-      headers: {
-        'Content-type': 'application/json'
-      },
     })
       .then(res => res.json())
       .then(data => setCreators(data))
@@ -20,16 +17,16 @@ function SideBar(props) {
 
   return (
     <div className="scrollbar w-80 h-full overflow-y-auto lg:min-w-[300px]">
-      <ul className=" mt-4">
-        <li onClick={() => setPage('home')} className={`px-3 py-3 rounded-lg ${page === 'home' ? 'text-[#8C52FF]' : null} hover:brightness-90 text-xl font-medium`}>
+      <ul className=" mt-4 dark:text-gray-200">
+        <li onClick={() => setPage({route:'home'})} className={`px-3 py-3 rounded-lg cursor-pointer ${page.route === 'home' ? 'text-[#8C52FF]' : null} hover:text-[#8C52FF] text-xl font-medium`}>
           <i class="mr-3 fa-solid fa-house"></i>
           Trang chủ
         </li>
-        <li onClick={() => setPage('following')} className={`px-3 py-3 rounded-lg ${page === 'following' ? 'text-[#8C52FF]' : null} hover:brightness-90 text-xl font-medium`}>
+        <li onClick={() => setPage({route:'following'})} className={`px-3 py-3 rounded-lg cursor-pointer ${page.route === 'following' ? 'text-[#8C52FF]' : null} hover:text-[#8C52FF] text-xl font-medium`}>
           <i class="mr-3 fa-solid fa-face-kiss-wink-heart"></i>
-          Đang follow
+          Creator
         </li>
-        <li onClick={() => setPage('hot')} className={`px-3 py-3 rounded-lg ${page === 'hot' ? 'text-[#8C52FF]' : null} hover:brightness-90 text-xl font-medium`}>
+        <li onClick={() => setPage({route:'hot'})} className={`px-3 py-3 rounded-lg cursor-pointer ${page.route === 'hot' ? 'text-[#8C52FF]' : null} hover:text-[#8C52FF] text-xl font-medium`}>
           <i class="mr-3 fa-solid fa-fire-flame-curved"></i>
           Hot
         </li>

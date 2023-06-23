@@ -6,15 +6,13 @@ export default function FollowingCreator(props) {
     const { name, avata, follower, like} = props
     const { setProfile, setPage } = useContext(AppContext)
     const { comment, isComment, Cid, respondentName, isReply, _id } = props
-
-    // console.log(follower)
-
+    
     function handleAccess() {
       handleGetInfo(_id, setProfile, setPage)
     }
 
   return (
-    <li onClick={handleAccess} className="  px-2 flex flex-col items-center h-64 bg-black bg-opacity-[2%] border rounded-xl">
+    <li onClick={handleAccess} className="  px-2 flex flex-col items-center h-64 bg-black bg-opacity-[2%] dark:bg-[#332e3a] dark:border-[#8C52FF] border rounded-xl">
     {/* <div style={{backgroundImage: 'url(https://thuthuatnhanh.com/wp-content/uploads/2019/11/hinh-nen-dien-thoai-dep-585x390.jpg)'}} 
         className="bg-cover bg-center w-20 h-20 min-h-[5rem] rounded-full mt-8"
     /> */}

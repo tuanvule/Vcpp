@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom'
 
 export const AppContext = React.createContext();
 
-export default function AppProvider({ children }) {
+export default function AppProvider({ children, theme, setTheme }) {
   const [user, setUser] = useState('')
   const [profile, setProfile] = useState()
-  const [page, setPage] = useState('home')
+  const [page, setPage] = useState({route: 'home', info: null})
+  const [searchInfo, setSearchInfo] = useState({})
+  // const [theme, setTheme] = useState('dark')
   const history = useNavigate()
 
   useEffect(() =>  {
@@ -20,7 +22,9 @@ export default function AppProvider({ children }) {
         history,
         user, setUser,
         profile, setProfile,
-        page, setPage
+        page, setPage,
+        theme, setTheme,
+        searchInfo, setSearchInfo
       }}
     >
       {children}

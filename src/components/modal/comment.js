@@ -19,11 +19,8 @@ export default function Comment(props) {
 
   useEffect(() => {
     console.log(_id)
-    fetch(`http://localhost:4000/comment/getReply/${_id}`, {
-      method: "GET",
-      headers: {
-        'Content-type': 'application/json'
-      }
+    fetch(`https://vccp-be.vercel.app/comment/getReply/${_id}`, {
+        method: "GET",
     })
       .then(res => res.json())
       .then(data => setReplyComment(data))
@@ -50,3 +47,5 @@ export default function Comment(props) {
         </li>
   )
 }
+
+

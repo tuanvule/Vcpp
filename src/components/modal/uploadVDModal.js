@@ -41,8 +41,6 @@ export default function UploadVDModal() {
     video.src = demoUrl
 
     video.onloadedmetadata = function () {
-      console.log(this.duration)
-      console.log(demoUrl)
       if(demoUrl && (fileSizeCondition <= 90 || this.duration <= 120)) {
         setFile(e.target.files[0])
         setVideoDemoUrl(demoUrl)
@@ -57,21 +55,15 @@ export default function UploadVDModal() {
   function upload() {
     const data = { caption, Cid: user._id, avata: user.avata, videoUrl, creatorName: user.name }
 
-    fetch('http://localhost:4000/createContent/', {
+    fetch('https://vccp-be.vercel.app/createContent/', {
       method: "POST",
-      headers: {
-        'Content-type': 'application/json'
-      },
       body: JSON.stringify(data)
     })
       .then((response) => response.json())
       .then((result) => {
         // setUser(result)
-        console.log(result)
       })
       .catch(err => console.log(err))
-
-      console.log('ab') 
   }
 
   function handleUpload() {
@@ -110,14 +102,14 @@ export default function UploadVDModal() {
 
 
   return (
-    <div className=" bg-gray-100 flex justify-center">
+    <div className=" bg-gray-100 dark:bg-[#1e1926] dark:text-white flex justify-center">
         {isShowNotify && !videoUrl ? <Notification setIsShowNotify={setIsShowNotify} type="error"/> :  null}
         {progress >= 100 && videoUrl && isShowNotify ? <Notification setIsShowNotify={setIsShowNotify} type="success"/> :  null}
         <Navbar isOutSide={true}/>
         {isLoading && 
           <UploadLoading progress={progress}/>
         }
-        <div className=" mt-28 bg-white w-4/5 overflow-hidden rounded-lg">
+        <div className=" mt-28 bg-white dark:bg-[#332e3a] dark:border-2 dark:border-[#8C52FF] w-4/5 overflow-hidden rounded-lg">
             <div className="py-1 border-b text-center">
                 <p className=" text-2xl font-bold text-[#8C52FF]">Upload content</p>
                 <p className=" text-gray-400">Upload your content here</p>

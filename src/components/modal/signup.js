@@ -79,8 +79,6 @@ export default function Signup(props) {
             } else if(value.trim().length === 0) {
                 errorLine.innerHTML = `you need to fill this field or remove all the space`
             }
-
-            console.log('abc')
         }
         // handleDubbing(inputNameRef)
     }
@@ -89,7 +87,6 @@ export default function Signup(props) {
         const errorLine = getParent(ref.current, '.form-group').children[2]
         const errorNameLine = getParent(inputNameRef.current, '.form-group').children[2]
         if(value !== ref.current.value) {
-            console.log(value !== ref.current.value)
             setErrorLineVisible((prev) => ({
                 ...prev,
                 confirmPassword: '',
@@ -116,23 +113,16 @@ export default function Signup(props) {
         const isPasswordErr = require(value.password, 'password', inputPasswordRef)
         const isConfirmPasswordErr = confirmPasswordRequire(value.password, inputConfirmPasswordRef)
 
-        console.log(isNameErr)
         if(isNameErr && isPasswordErr && isConfirmPasswordErr) {
             
-            console.log(performance.now())
-            fetch('http://localhost:4000/login/signup', {
+            fetch('https://vccp-be.vercel.app/login/signup', {
                 method: "POST",
-                headers: {
-                  'Content-type': 'application/json'
-                },
                 body: JSON.stringify(value)
               })
               .then((response) => response.json())
               .then((result) => {
                 setUser(result)
-                console.log(result)
               })
-            console.log(performance.now())
 
         }
     }
@@ -143,7 +133,6 @@ export default function Signup(props) {
             [e.target.name]: e.target.value
         })
 
-        console.log(e.target.name)
         setErrorLineVisible({
             ...errorLineVisible,
             [e.target.name]: 'hidden'
@@ -151,7 +140,7 @@ export default function Signup(props) {
     }
 
   return (
-    <form ref={formRef} method="GET" action="http://localhost:4000/login/signup" className="card-white animate-[moveSignupModalToLeft_.6s_ease-in-out] flex flex-col items-center w-[40%] h-[90%] my-auto ml-auto mr-20 text-white">
+    <form ref={formRef} method="GET" action="https://vccp-be.vercel.app/login/signup" className="card-white animate-[moveSignupModalToLeft_.6s_ease-in-out] flex flex-col items-center w-[40%] h-[90%] my-auto ml-auto mr-20 text-white">
       <h1 className=" mb-8 mt-8">Đăng ký</h1>
       <div className="form-group">
           <h3 className=" text-xl">Name</h3>

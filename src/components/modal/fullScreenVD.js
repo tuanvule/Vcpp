@@ -6,7 +6,7 @@ import LoginRequest from '../primary/loginRequest'
 import ZoomedComment from './zoomedComment'
 
 export default function FullScreenVD(props) {
-  const [isErr, setIsErr] = useState(false)
+  const [isErr, setIsRequestLogin] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [progressValue, setProgressValue] = useState(0)
   const [isOpenCloseBtn, setIsOpenCloseBtn] = useState(false)
@@ -31,16 +31,13 @@ export default function FullScreenVD(props) {
 
   useEffect(() => {
     if (isPlaying) {
-      console.log('Calling video.play()');
       ref.current.play();
     } else {
-      console.log('Calling video.pause()');
       ref.current.pause();
     }
   }, [isPlaying]);
 
   useEffect(() => {
-    console.log(ref.current)
     // khi tiến độ bài hát thay đổi
     ref.current.ontimeupdate = function() {
       const progessPercent = Math.floor((ref.current.currentTime / ref.current.duration * 100))
@@ -71,7 +68,7 @@ export default function FullScreenVD(props) {
         <i onClick={() => setIsOpenFullScreen(false)} class="fa-solid fa-xmark mx-8 my-5 absolute text-white text-4xl cursor-pointer"></i>
       </div>
 
-        {isErr && <LoginRequest setIsErr={setIsErr} title="bạn cần phải đăng nhập để thực hiện điều này"/>}
+        {isErr && <LoginRequest setIsRequestLogin={setIsRequestLogin} title="bạn cần phải đăng nhập để thực hiện điều này"/>}
         <div className="bg-[#161C2D] flex-1 flex items-center rounded-2xl">
           <div className="follow-btn relative ">
 
@@ -91,7 +88,7 @@ export default function FullScreenVD(props) {
           {/* <FullScreenVD postId={props.postId}/> */}
           </div>
         </div>
-        <ZoomedComment creatorAvata={creatorAvata} postId={postId} creatorName={creatorName} caption={caption} setIsErr={setIsErr} Cid={Cid} Uid={Uid} like={like}/>
+        <ZoomedComment creatorAvata={creatorAvata} postId={postId} creatorName={creatorName} caption={caption} setIsRequestLogin={setIsRequestLogin} Cid={Cid} Uid={Uid} like={like}/>
     </div>
   )
 }

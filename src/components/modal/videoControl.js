@@ -23,7 +23,6 @@ export default function VideoControl(props) {
   }
 
   function handleRewind(e) {
-    console.log(e.clientX)
     const progressLocation = progressLocationRef.current.getBoundingClientRect()
 
     const progress = Math.floor((e.clientX - progressLocation.x) / progressLocation.width * 100)
@@ -64,7 +63,6 @@ export default function VideoControl(props) {
   useEffect(() => {
     if(isOpenFullScreen) ref.current.pause()
   }, [isOpenFullScreen])
-  console.log(isOpenFullScreen)
 
   const { videoUrl } = props
 

@@ -11,7 +11,6 @@ export default function Notification(props) {
     }
   })
 
-  console.log(props)
 
   return (
     <div ref={notificationRef} className={`animate-[moveNotification_2s_ease-in] z-50 fixed -right-1 top-[4.5rem] min-w-[208px] px-2 py-1 rounded-lg text-xl leading-none border-2 ${props.type === 'error' && 'bg-[#FCEDE9]  border-[#E6D0CB]'} ${props.type === 'success' && 'bg-[#EAF7EE]  border-[#CAE0D0]'} ${props.type === 'warning' && 'bg-[#FEF7EA]  border-[#F2E4CD]'}`}>

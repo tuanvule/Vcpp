@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import AppProvider from './context/appContext';
 import { BrowserRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+let header = new Headers()
 
 root.render(
   <BrowserRouter>
@@ -14,7 +15,7 @@ root.render(
         <App />
       </AppProvider>
     </React.StrictMode>
-  </BrowserRouter>
+  </BrowserRouter>  
 );
 
 // If you want to start measuring performance in your app, pass a function

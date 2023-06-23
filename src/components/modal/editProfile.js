@@ -23,17 +23,13 @@ export default function EditProfile(props) {
             // }
         }
 
-        fetch(`http://localhost:4000/creator/updateProfile/${_id}`, {
+        fetch(`https://vccp-be.vercel.app/creator/updateProfile/${_id}`, {
             method: "POST",
-            headers: {
-              'Content-type': 'application/json'
-            },
             body: JSON.stringify(value)
           })
           .then(response => response.json())
           .then(result => {
             setProfile(result)
-            console.log(result)
             props.setIsEditProfile(false)
           })
     }
@@ -44,7 +40,6 @@ export default function EditProfile(props) {
             [e.target.name]: e.target.value
         })
     }
-    console.log(profileValue)
 
   return (
     <div className="z-[110] fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-white bg-opacity-50">

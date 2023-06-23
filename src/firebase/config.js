@@ -20,7 +20,5 @@ firebase.analytics();
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// console.log(db)  
-
 export { db, auth };
 export default firebase; 

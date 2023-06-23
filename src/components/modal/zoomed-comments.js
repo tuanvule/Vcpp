@@ -12,9 +12,9 @@ export default function ZoomedCommentsModal(props) {
   const [newComments, setNewComment] = useState({})
   const [respondent, setRespondent] = useState()
 
-  // const [isErr, setIsErr] = useState(false)
+  // const [isErr, setIsRequestLogin] = useState(false)
 
-  const { postId, setIsErr } = props
+  const { postId, setIsRequestLogin } = props
 
   const { user: { name, avata, _id }, user } = useContext(AppContext)
 
@@ -37,11 +37,8 @@ export default function ZoomedCommentsModal(props) {
         postId
       }
   
-      fetch(`http://localhost:4000/comment/create/${postId}`, {
+      fetch(`https://vccp-be.vercel.app/comment/create/${postId}`, {
         method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
         body: JSON.stringify(data)
       })
       .then(res => res.json())
@@ -62,11 +59,8 @@ export default function ZoomedCommentsModal(props) {
         name
       }
   
-      fetch(`http://localhost:4000/comment/createReply/${respondent.commentId}`, {
+      fetch(`https://vccp-be.vercel.app/comment/createReply/${respondent.commentId}`, {
         method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
         body: JSON.stringify(data)
       })
       .then(res => res.json())
@@ -77,7 +71,7 @@ export default function ZoomedCommentsModal(props) {
       setValue('')
       setRespondent(null)
     } else {
-      setIsErr(true)
+      setIsRequestLogin(true)
     }
   }
 
@@ -104,11 +98,8 @@ export default function ZoomedCommentsModal(props) {
   // }, [])
 
   useEffect(() => {
-    fetch(`http://localhost:4000/comment/${postId}`, {
+    fetch(`https://vccp-be.vercel.app/comment/${postId}`, {
       method: "GET",
-      headers: {
-        'Content-type': 'application/json'
-      }
     })
       .then(res => res.json())
       .then(data => setComment(data))
@@ -123,11 +114,11 @@ export default function ZoomedCommentsModal(props) {
           ))}
       </ul>
 
-        <div className="flex items-center absolute bottom-4 right-1/2 transform translate-x-1/2 w-[92%] py-2 px-4 bg-[#F1F1F2] border rounded-lg">
+        <div className="flex items-center absolute bottom-4 right-1/2 transform translate-x-1/2 w-[92%] py-1 px-4 bg-[#F1F1F2] dark:bg-[#332e3a] dark:border-[#615c67] border rounded-lg">
           
           <div className="relative flex-1 mr-4">
             {/* <textarea placeholder="viết bình luận của bạn" maxlength="150" ref={inputRef} value={value} onChange={(e) => handleInputChange(e)} type="text" className={`resize-none w-full h-[38px] pl-2 pr-8 py-1 text-lg outline-none border border-gray-300 focus:border-[#8C52FF] rounded-md overflow-y-hidden`}/> */}
-            <textarea placeholder={respondent ? `trả lời ${respondent.name}: ` : 'viết bình luận của bạn'} maxLength="150" ref={inputRef} value={value} onChange={(e) => handleInputChange(e)} type="text" className={` ${respondent && respondent.isReply && 'placeholder:bg-[#F1F1F2] placeholder:text-[#a073fb] placeholder:w-fit placeholder:rounded placeholder:px-1'} resize-none w-full h-[38px] pl-2 pr-8 py-1 text-lg outline-none border border-gray-300 focus:border-[#8C52FF] rounded-md overflow-y-hidden`}/>
+            <textarea placeholder={respondent ? `trả lời ${respondent.name}: ` : 'viết bình luận của bạn'} maxLength="150" ref={inputRef} value={value} onChange={(e) => handleInputChange(e)} type="text" className={` ${respondent && respondent.isReply && 'placeholder:bg-[#F1F1F2] dark:placeholder:bg-[#494450] placeholder:text-[#a073fb] placeholder:w-fit placeholder:rounded placeholder:px-1'} dark:text-white dark:bg-[#494450] resize-none w-full h-[38px] pl-2 pr-8 py-1 mt-2 text-lg outline-none border border-gray-300 focus:border-[#8C52FF] rounded-md overflow-y-hidden`}/>
 
             <i onClick={() => setIsShowEmojiList(!isShowEmojiList)} class="emoji hasTitle fa-regular fa-face-smile-beam absolute top-1/2 transform -translate-y-1/2 right-2 text-xl hover:text-[#8950FA] cursor-pointer">
               {!isShowEmojiList && <Title title="emoji" />}

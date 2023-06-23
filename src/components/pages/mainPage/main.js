@@ -12,14 +12,14 @@ export default function MainPage() {
     const {page} = useContext(AppContext)
 
   return (
-    <div className=" h-screen dark:bg-[#161C2D]">
+    <div className="h-screen dark:bg-[#1e1926] dark:color-white">
         <Navbar/>
         <div className="lg:pl-[8rem] pl-11 pt-16 h-full flex">
             <Sidebar />
-            {page === 'home' && <HomePage/>}
-            {page === 'following' && <Following/>}
-            {page === 'hot' && <HotPage/>}
-            {page === 'creator' && <Creator/>}
+            {page.route === 'home' && <HomePage/>}
+            {page.route === 'following' && <Following/>}
+            {page.route === 'hot' && <HotPage/>}
+            {page.route === 'creator' && <Creator/>}
         </div>
     </div>
   )

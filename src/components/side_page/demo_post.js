@@ -6,11 +6,7 @@ import { AppContext } from '../../context/appContext'
 
 export default function DemoPost(props) { 
 
-    const { user: { name, avata, _id }, user } = useContext(AppContext)
-
-    function handleLike() {
-        console.log('a')
-    }
+    const { user: { name } } = useContext(AppContext)
 
     // var stringToHTML = function (str) {
     //     var parser = new DOMParser();

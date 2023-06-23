@@ -2,20 +2,21 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import ZoomedCommentsModal from './zoomed-comments'
+import { useContext } from 'react'
+import { AppContext } from '../../context/appContext'
 
 export default function ZoomedComment(props) {
   const [isFollow, setIsFollow] = useState(false)
   const [isLike, setIslike] = useState(false)
 
-  const {creatorAvata, postId, creatorName, caption, setIsErr, Cid, Uid, like} = props
+  const { theme } = useContext(AppContext) 
+
+  const {creatorAvata, postId, creatorName, caption, setIsRequestLogin, Cid, Uid, like} = props
 
   function handleFollow() {
     if(Uid) {
-        fetch(`http://localhost:4000/action/follow/${Cid}`, {
+        fetch(`https://vccp-be.vercel.app/action/follow/${Cid}`, {
             method: "POST",
-            headers: {
-              'Content-type': 'application/json'
-            },
             body: JSON.stringify({ Uid: Uid})
         })
             .then(res => res.json())
@@ -23,7 +24,7 @@ export default function ZoomedComment(props) {
 
         setIsFollow(true)
     } else {
-        setIsErr(true)
+        setIsRequestLogin(true)
     }
 
 }
@@ -31,11 +32,8 @@ export default function ZoomedComment(props) {
 function handleUnFollow() {
     if(!Uid) return
 
-    fetch(`http://localhost:4000/action/unfollow/${Cid}`, {
+    fetch(`https://vccp-be.vercel.app/action/unfollow/${Cid}`, {
         method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
         body: JSON.stringify({ Uid: Uid})
     })
         .then(res => res.json())
@@ -53,18 +51,12 @@ useEffect(() => {
         setIslike(Boolean(wasLike))
     }
 
-    console.log(Cid)
-
-    fetch(`http://localhost:4000/creator/isFollow/${Cid}`,{            
+    fetch(`https://vccp-be.vercel.app/creator/isFollow/${Cid}`,{            
         method: "POST",
-        headers: {
-        'Content-type': 'application/json'
-        },
         body: JSON.stringify({ Uid: Uid})
     })
         .then(res => res.json())
         .then(isFollow => {
-            console.log(isFollow)
             setIsFollow(isFollow)
         })
         .catch(err => console.log(err))
@@ -73,7 +65,7 @@ useEffect(() => {
 
   return (
      <div className="relative w-[30%] h-full ml-6">
-          <div className="scrollbar w-full h-full bg-white rounded-2xl overflow-hidden overflow-y-scroll">
+          <div className={`${theme === 'dark' ? 'scrollbar_dark' : 'scrollbar'} w-full h-full bg-white dark:bg-[#1e1926] dark:text-white rounded-2xl overflow-hidden overflow-y-scroll`}>
               <div className="w-full h-full flex flex-col px-2">
                 <div className="w-full flex justify-between items-center px-2 py-2 mr-10 mt-2">
                     <div className="flex ">
@@ -105,11 +97,11 @@ useEffect(() => {
                         </div>
                     }
                 </div>
-                <div className={`px-2 pb-2 bg-white`}>
+                <div className={`px-2 pb-2 bg-white dark:bg-[#1e1926]`}>
                     <td className=" w-full break-all" dangerouslySetInnerHTML={{__html: caption}} />
                 </div>
                 <hr className=" border-[#8C52FF] ml-2 mt-4"/>
-                <ZoomedCommentsModal setIsErr={setIsErr} postId={postId}/>
+                <ZoomedCommentsModal setIsRequestLogin={setIsRequestLogin} postId={postId}/>
               </div>
           </div>
         </div>

@@ -77,7 +77,7 @@ export default class RichEditorExample extends React.Component {
     }
 
     return (
-      <div className="RichEditor-root">
+      <div className="RichEditor-root dark:bg-[#1E1926] dark:text-white">
         <BlockStyleControls
           editorState={editorState}
           onToggle={this.toggleBlockType}

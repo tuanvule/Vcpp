@@ -23,10 +23,6 @@ export default function Signin(props) {
 
         if(userData.name === name && userData.password === password) {
             const { name, _id, avata, followed } = userData
-
-            // console.log(followed)
-
-            // console.log({ name, _id, avata, follower })
             setUser({
                 name, _id, avata, followed
             })
@@ -44,11 +40,8 @@ export default function Signin(props) {
         let password = inputPasswordRef.current.value.toLowerCase()
         let name = inputNameRef.current.value.toLowerCase()
 
-        fetch(`http://localhost:4000/login/signin?name=${name}&password=${password}`, {
+        fetch(`https://vccp-be.vercel.app/login/signin?name=${name}&password=${password}`, {
             method: "GET",
-            headers: {
-              'Content-type': 'application/json'
-            },
         })
             .then(res => res.json())
             .then(data => handleCheckUser(data))

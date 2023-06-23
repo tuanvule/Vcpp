@@ -11,11 +11,11 @@ export default function CommentsModal(props) {
   const [comments, setComment] = useState([])
   const [newComments, setNewComment] = useState({})
   const [respondent, setRespondent] = useState()
-  // const [isErr, setIsErr] = useState(false)
+  // const [isErr, setIsRequestLogin] = useState(false)
 
-  const { postId, setIsOpenComment, setIsErr } = props
+  const { postId, setIsOpenComment, setIsRequestLogin } = props
 
-  const { user: { name, avata, _id }, user } = useContext(AppContext)
+  const { user: { name, avata, _id }, user, theme } = useContext(AppContext)
 
   // const { name, avata, _id } = user
 
@@ -36,11 +36,8 @@ export default function CommentsModal(props) {
         postId
       }
   
-      fetch(`http://localhost:4000/comment/create/${postId}`, {
+      fetch(`https://vccp-be.vercel.app/comment/create/${postId}`, {
         method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
         body: JSON.stringify(data)
       })
       .then(res => res.json())
@@ -60,11 +57,8 @@ export default function CommentsModal(props) {
         name
       }
   
-      fetch(`http://localhost:4000/comment/createReply/${respondent.commentId}`, {
+      fetch(`https://vccp-be.vercel.app/comment/createReply/${respondent.commentId}`, {
         method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
         body: JSON.stringify(data)
       })
       .then(res => res.json())
@@ -75,7 +69,7 @@ export default function CommentsModal(props) {
       setValue('')
       setRespondent(null)
     } else {
-      setIsErr(true)
+      setIsRequestLogin(true)
     }
   }
 
@@ -102,11 +96,8 @@ export default function CommentsModal(props) {
   useEffect(() => SetNewSize(inputRef.current), [value])
 
   useEffect(() => {
-    fetch(`http://localhost:4000/comment/${postId}`, {
+    fetch(`https://vccp-be.vercel.app/comment/${postId}`, {
       method: "GET",
-      headers: {
-        'Content-type': 'application/json'
-      }
     })
       .then(res => res.json())
       .then(data => setComment(data))
@@ -121,20 +112,21 @@ export default function CommentsModal(props) {
 
   
   return (
-    <div tabindex="0" ref={CommentRef} className={`card absolute z-30 bg-white animate-[moveIn_0.5s_ease-in-out] w-4/5 right-14 bottom-8 rounded-lg select-none outline-none`}>
-      <ul className="scrollbar h-[23rem] ml-0 px-2 pt-2 pb-20 rounded-lg overflow-y-auto">
+    <div tabindex="0" ref={CommentRef} className={`${theme == 'light' ? 'card' : 'dark_card'} absolute z-30 bg-white animate-[moveIn_0.5s_ease-in-out] w-4/5 right-14 bottom-8 rounded-lg select-none outline-none`}>
+      <ul className={`${theme === 'dark' ? 'scrollbar_dark' : 'scrollbar'} h-[23rem] ml-0 px-2 pt-2 pb-20 rounded-lg overflow-y-auto`}>
         {comments && comments.map((data, index) => (
           <Comment newComments={newComments} inputele={inputRef} setRespondent={setRespondent} {...data}/>
           ))}
       </ul>
 
-        <div className="flex items-center absolute bottom-4 right-1/2 transform translate-x-1/2 w-[88%] py-2 px-4 bg-[#F1F1F2] border rounded-lg">
+        <div className="flex items-center absolute bottom-4 right-1/2 transform translate-x-1/2 w-[88%] py-1 px-4 bg-[#F1F1F2] dark:bg-[#332e3a] dark:border-[#615c67] border rounded-lg">
           
           <div className="relative flex-1 mr-4">
-            <textarea placeholder={respondent ? `trả lời ${respondent.name}: ` : 'viết bình luận của bạn'} maxLength="150" ref={inputRef} value={value} onChange={(e) => handleInputChange(e)} type="text" className={` ${respondent && respondent.isReply && 'placeholder:bg-[#F1F1F2] placeholder:text-[#a073fb] placeholder:w-fit placeholder:rounded placeholder:px-1'} resize-none w-full h-[38px] pl-2 pr-8 py-1 text-lg outline-none border border-gray-300 focus:border-[#8C52FF] rounded-md overflow-y-hidden`}/>
+            {/* <textarea placeholder={respondent ? `trả lời ${respondent.name}: ` : 'viết bình luận của bạn'} maxLength="150" ref={inputRef} value={value} onChange={(e) => handleInputChange(e)} type="text" className={`dark:text-white dark:bg-[#494450] ${respondent && respondent.isReply && 'placeholder:bg-[#F1F1F2] placeholder:text-[#a073fb] placeholder:w-fit placeholder:rounded placeholder:px-1'} resize-none w-full h-[38px] pl-2 pr-8 py-1 mt-2 text-lg outline-none border border-gray-300 focus:border-[#8C52FF] rounded-md overflow-y-hidden`}/> */}
             {/* <input ref={inputRef} value={value} onChange={(e) => handleInputChange(e)} type="text" className="w-full px-2 py-1 outline-none border border-gray-300 focus:border-[#8C52FF] rounded-md"/> */}
+            <textarea placeholder={respondent ? `trả lời ${respondent.name}: ` : 'viết bình luận của bạn'} maxLength="150" ref={inputRef} value={value} onChange={(e) => handleInputChange(e)} type="text" className={` ${respondent && respondent.isReply && 'placeholder:bg-[#F1F1F2] dark:placeholder:bg-[#494450] placeholder:text-[#a073fb] placeholder:w-fit placeholder:rounded placeholder:px-1'} dark:text-white dark:bg-[#494450] resize-none w-full h-[38px] pl-2 pr-8 py-1 mt-2 text-lg outline-none border border-gray-300 focus:border-[#8C52FF] rounded-md overflow-y-hidden`}/>
 
-            <i onClick={() => setIsShowEmojiList(!isShowEmojiList)} class="emoji hasTitle fa-regular fa-face-smile-beam absolute top-1/2 transform -translate-y-1/2 right-3 text-xl hover:text-[#8950FA] cursor-pointer">
+            <i onClick={() => setIsShowEmojiList(!isShowEmojiList)} class="emoji hasTitle fa-regular fa-face-smile-beam absolute top-1/2 transform -translate-y-1/2 right-3 text-xl hover:text-[#8950FA] dark:hover:text-[#8950FA] dark:text-white cursor-pointer">
               {!isShowEmojiList && <Title title="emoji" />}
             </i>
 
